@@ -29,9 +29,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //RUTA
-// app.get('/', function (req, res) {
-//     res.send('Hello World!');
-// });
+app.get('/', function (req, res) {
+     res.send('Hello World!');
+});
 
 app.use('/api', require('./routes/servicio'));
 app.use('/api', require('./routes/user'));
