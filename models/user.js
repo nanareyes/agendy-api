@@ -8,7 +8,7 @@ const userSchema = new Schema({
   dateOfBirth: { type: Date },
   address: { type: String, required: [true, 'Dirección requerida'] },
   city: { type: String, required: [true, 'Ciudad obligatorio'] },
-  departament: { type: String, required: [true, 'Departamento obligatorio'] },
+  department: { type: String, required: [true, 'Departamento obligatorio'] },
   phone: { type: Number, required: [true, 'teléfono requerido'] },
   email: { type: String, required: [true, 'Email obligatorio'] },
   password: { type: String, required: [true, 'Contraseña obligatoria'] },
