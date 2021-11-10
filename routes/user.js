@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 router.get('/user', verificarAuth , async(req, res) => {
-    
+
 })
 
 //Ruta para crear un nuevo user
