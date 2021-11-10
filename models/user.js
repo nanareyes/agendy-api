@@ -2,18 +2,18 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  identification: { type: Number, required: [true, 'Identificación requerida'] },
+  identification: { type: Number },
   name: { type: String, required: [true, 'Nombre obligatorio'] },
-  lastname: { type: String, required: [true, 'Apellidos obligatorio'] },
+  lastname: { type: String},
   dateOfBirth: { type: Date },
   address: { type: String },
   city: { type: String },
   department: { type: String},
-  phone: { type: Number, required: [true, 'teléfono requerido'] },
+  phone: { type: Number },
   email: { type: String, required: [true, 'Email obligatorio'] },
   password: { type: String, required: [true, 'Contraseña obligatoria'] },
-  type: { type: String, required: [true, 'Tipo de usuario obligatorio'] },
-  terms: { type: Boolean, required: [true, 'terminos obligatorios'] },
+  type: { type: String},
+  terms: { type: Boolean },
 });
 
 // Eliminar pass de respuesta JSON
