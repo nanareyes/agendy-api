@@ -14,7 +14,7 @@ router.get('/user', verificarAuth , async(req, res) => {
 })
 
 //Ruta para crear un nuevo user
-router.post('/nuevo-user', async (req, res) => {
+router.post('/new-user', async (req, res) => {
     const body = req.body;
 
     body.password = bcrypt.hashSync(body.password, saltRounds);
