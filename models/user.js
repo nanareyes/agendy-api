@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   id: { type: String },
   googleId: { type: String },
-  googleProfie: {type: Object},
+  googleProfile: {type: Object},
   loginType: { type: String },
   identification: { type: Number },
   name: { type: String, required: [true, 'Nombre obligatorio'] },
