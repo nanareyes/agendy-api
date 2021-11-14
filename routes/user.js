@@ -23,8 +23,7 @@ router.post('/new-user', async (req, res) => {
 
 
     try {
-        const userCreateResult = await User.create(body);
-        const userDB = await User.findById(userCreateResult._id)
+        const userDB = await User.create(body);
         res.status(200).json(userDB);
     }
     catch (error) {
