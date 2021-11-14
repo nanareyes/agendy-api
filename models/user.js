@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   id: { type: String },
   googleId: { type: String },
-  registerSource: { type: String },
+  googleProfie: {type: Object},
+  loginType: { type: String },
   identification: { type: Number },
   name: { type: String, required: [true, 'Nombre obligatorio'] },
   lastName: { type: String },
@@ -17,7 +18,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: function () {
-      return [this.registerSource === 'AGENDY', 'Contraseña obligatoria']
+      return [this.loginType === 'AGENDY', 'Contraseña obligatoria']
     }
   },
   image: { type: String },
