@@ -22,8 +22,10 @@ router.post('/', async (req, res) => {
       searchUser = { googleId: body.googleId }
     }
     // Buscamos email en DB
-    const userDB = await User.findOne(searchUser);
-
+    let userDB = await User.findOne(searchUser);
+    if(!userDB && body.loginType === 'GOOGLE') {
+      userDB = await User.create(body);
+    }
     // Evaluamos si existe el usuario en DB
     if (!userDB) {
       return res.status(400).json({
