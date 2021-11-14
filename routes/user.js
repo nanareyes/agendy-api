@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-const {verificarAuth} = require('../middlewares/autenticacion.js');
+const { verificarAuth } = require('../middlewares/autenticacion.js');
 //importar modelo
 import User from "../models/user";
 // Hash Contraseña
@@ -9,16 +9,16 @@ const bcrypt = require('bcrypt');
 
 
 const saltRounds = 10;
-router.get('/user', verificarAuth , async(req, res) => {
+router.get('/user', verificarAuth, async (req, res) => {
 
 })
 
 //Ruta para crear un nuevo user
 router.post('/new-user', async (req, res) => {
     const body = req.body;
-
-    body.password = bcrypt.hashSync(body.password, saltRounds);
-
+    if (body.password) {
+        body.password = bcrypt.hashSync(body.password, saltRounds);
+    }
     console.log('body**********************', body);
 
 
@@ -36,7 +36,7 @@ router.post('/new-user', async (req, res) => {
 });
 
 //Ruta para consultar todos los User
-router.get('/user', async(req,res)=> {
+router.get('/user', async (req, res) => {
     try {
         const userDB = await User.find();
         res.json(userDB);
