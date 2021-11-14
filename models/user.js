@@ -3,9 +3,14 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   id: { type: String },
-  googleId: { type: String },
-  googleProfile: {type: Object},
-  loginType: { type: String },
+  googleId: {
+    type: String, required: [
+      function () { return this.loginType === 'GOOGLE'; },
+      'Id Google es obligatorio'
+    ]
+  },
+  googleProfile: { type: Object },
+  loginType: { type: String, required: [true, 'Tipo de login obligatorio']  },
   identification: { type: Number },
   name: { type: String, required: [true, 'Nombre obligatorio'] },
   lastName: { type: String },
@@ -17,9 +22,10 @@ const userSchema = new Schema({
   email: { type: String, required: [true, 'Email obligatorio'] },
   password: {
     type: String,
-    required: function () {
-      return [this.loginType === 'AGENDY', 'Contraseña obligatoria']
-    }
+    required: [
+      function () { return this.loginType === 'AGENDY'; },
+      'Contraseña obligatoria'
+    ]
   },
   image: { type: String },
   userType: { type: String },
