@@ -13,13 +13,18 @@ import { verificarAuth } from './middlewares/autenticacion';
 
 // const uri = 'mongodb://localhost:27017/agendyDB';
 const uri = 'mongodb+srv://AgendyDB:agendyDB@cluster0.9sfy7.mongodb.net/AgendyDB?retryWrites=true&w=majority';
-const options = {useNewUrlParser: true, useUnifiedTopology: true};
+const options = { useNewUrlParser: true, useUnifiedTopology: true };
+
+// Controler del password
+const forgotpasswordController = require('./password/forgotPasswordController');
+const resetpasswordController = require('./password/resetPasswordController');
+
 
 // Or using promises
 mongoose.connect(uri, options).then(
     () => { console.log('Conectado a DB') },
     err => { console.log(err) }
-    );
+);
 
 
 //Middleware
@@ -30,13 +35,15 @@ app.use(express.urlencoded({ extended: true }));
 
 //RUTA
 app.get('/', function (req, res) {
-     res.send('Hello World!');
+    res.send('Hello World!');
 });
 
 app.use('/api', require('./routes/servicio'));
 app.use('/api', require('./routes/user'));
 app.use('/api', verificarAuth, require('./routes/agenda'));
 app.use('/login', require('./routes/login'));
+app.use('/resetpassword', resetpasswordController.reset);
+app.use('/forgotpassword', forgotpasswordController.sendMail);
 
 
 // Middleware para Vue.js router modo history
@@ -50,6 +57,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 app.set('puerto', process.env.PORT || 3000);
 app.listen(app.get('puerto'), function () {
-    console.log('Example app listening on port'+ app.get('puerto'));
+    console.log('Example app listening on port' + app.get('puerto'));
 });
 
