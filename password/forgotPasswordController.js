@@ -61,7 +61,7 @@ const ForgotPassword = {
         } catch (error) {
             res.status(500).send ({
                 
-                message: 'Ha ocurrido un error',
+                message: 'Ha ocurrido un error, grande.',
                 error
             })
         }
