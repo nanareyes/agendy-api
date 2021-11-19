@@ -18,7 +18,7 @@ const userSchema = new Schema({
   address: { type: String },
   city: { type: String },
   department: { type: String },
-  phone: { type: -String },
+  phone: { type: String },
   email: { type: String, required: [true, 'Email obligatorio'] },
   password: {
     type: String,
@@ -27,7 +27,7 @@ const userSchema = new Schema({
       'Contraseña obligatoria'
     ]
   },
-  image: { type: String },
+  imageUrl: { type: String },
   userType: { type: String },
   terms: { type: Boolean },
 });
