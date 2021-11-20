@@ -26,7 +26,7 @@ router.post('/forgotPassword', async (req, res) => {
             })
         }
 
-        const token = jwt.sign({ id: user.id}, 'agendyNails', {expiresIn: "1h"});
+        const token = jwt.sign({ _id: user._id}, 'agendyNails', {expiresIn: "1h"});
         user.update ({
             tokenResetPassword: token
         });
@@ -45,13 +45,13 @@ router.post('/forgotPassword', async (req, res) => {
 
         console.log(process.env.EMAIL_ADDRESS);
         console.log(process.env.EMAIL_PASSWORD);
-
+        console.log(user._id);
         const mailOptions = {
             from: 'agendynails@gmail.com',
             to: `${user.email}`,
             subject: 'Enlace para recuperar su cuenta de Agendy Nails',
             text:
-            `${urlFront}/resetpassword/${user.id}/${token}`
+            `${urlFront}/resetpassword/${user._id}/${token}`
         };
 
         transporter.sendMail(mailOptions, (err, response) => {

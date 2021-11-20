@@ -17,7 +17,7 @@ const ResetPassword = {
             req.body.password = await bcrypt.hash(req.body.password, 10)
             const resetPassword = await User.update(req.body, {
                 where: {
-                    id: req.params.id,
+                    _id: req.params._id,
                     tokenresetpassword: req.params.tokenresetpassword
                 }
             });
