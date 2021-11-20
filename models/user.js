@@ -19,7 +19,11 @@ const userSchema = new Schema({
   city: { type: String },
   department: { type: String },
   phone: { type: String },
-  email: { type: String, required: [true, 'Email obligatorio'] },
+  email: {
+    type: String,
+    unique: true,
+    required: [true, 'Email obligatorio']
+  },
   password: {
     type: String,
     required: [
@@ -28,7 +32,10 @@ const userSchema = new Schema({
     ]
   },
   imageUrl: { type: String },
-  userType: { type: String },
+  userType: {
+    type: String,
+    unique: true,
+  },
   terms: { type: Boolean },
 });
 
