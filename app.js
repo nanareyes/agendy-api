@@ -6,6 +6,7 @@ import path from 'path';
 
 const app = express();
 
+
 // Conexión base de datos
 const mongoose = require('mongoose');
 
@@ -26,7 +27,6 @@ mongoose.connect(uri, options).then(
     err => { console.log(err) }
 );
 
-
 //Middleware
 app.use(morgan('tiny'));
 app.use(cors());
@@ -40,6 +40,7 @@ app.get('/', function (req, res) {
 
 app.use('/api', require('./routes/servicio'));
 app.use('/api', require('./routes/user'));
+app.use('/api/profile', require('./routes/profile'));
 app.use('/api', verificarAuth, require('./routes/agenda'));
 app.use('/login', require('./routes/login'));
 app.use('/resetpassword', resetpasswordController.reset);
@@ -55,7 +56,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.listen(3000, function () {
 // console.log('Example app listening on port 3000!');
 // });
-app.set('puerto', process.env.PORT || 3000);
+app.set('puerto', process.env.PORT || 4000);
 app.listen(app.get('puerto'), function () {
     console.log('Example app listening on port' + app.get('puerto'));
 });
