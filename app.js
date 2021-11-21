@@ -43,8 +43,9 @@ app.use('/api', require('./routes/user'));
 app.use('/api/profile', require('./routes/profile'));
 app.use('/api', verificarAuth, require('./routes/agenda'));
 app.use('/login', require('./routes/login'));
-app.use('/resetpassword', resetpasswordController.reset);
-app.use('/forgotpassword', forgotpasswordController.sendMail);
+app.use('/api', require('./routes/resetPassword'));
+app.use('/api', require('./routes/forgotPassword'));
+
 
 
 // Middleware para Vue.js router modo history
