@@ -26,7 +26,7 @@ router.post('/forgotPassword', async (req, res) => {
             })
         }
 
-        const token = jwt.sign({ _id: user._id}, 'agendyNails', {expiresIn: "1h"});
+        const token = jwt.sign({ id: user._id}, 'agendyNails', {expiresIn: "1h"});
         user.update ({
             tokenResetPassword: token
         });
@@ -43,9 +43,6 @@ router.post('/forgotPassword', async (req, res) => {
         const emailPort = process.env.EMAIL_PORT || 3000;
         const urlFront = 'http://agendy-client-react-dev.herokuapp.com';
 
-        console.log(process.env.EMAIL_ADDRESS);
-        console.log(process.env.EMAIL_PASSWORD);
-        console.log(user._id);
         const mailOptions = {
             from: 'agendynails@gmail.com',
             to: `${user.email}`,
