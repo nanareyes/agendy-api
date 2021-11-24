@@ -5,6 +5,8 @@ const { verificarAuth } = require('../middlewares/autenticacion.js');
 import User from "../models/user";
 // Hash Contraseña
 const bcrypt = require('bcrypt');
+// JWT
+const jwt = require('jsonwebtoken');
 
 
 
@@ -15,7 +17,7 @@ router.get('/user', verificarAuth, async (req, res) => {
 
 //Ruta para crear un nuevo user
 router.post('/new-user', async (req, res) => {
-    const body = req.body;
+    let body = req.body;
     if (body.password) {
         body.password = bcrypt.hashSync(body.password, saltRounds);
     }
@@ -23,8 +25,17 @@ router.post('/new-user', async (req, res) => {
 
 
     try {
+        // Generar Token
+        let token = jwt.sign({
+            data: userDB
+        }, 'secret', { expiresIn: 60 * 60 * 24 * 30 }) // Expira en 30 días
+
+
         const userDB = await User.create(body);
-        res.status(200).json(userDB);
+        res.status(200).json({
+            userDB,
+            token
+        });
     }
     catch (error) {
         console.log(error)
