@@ -4,21 +4,11 @@ const router = express.Router();
 import User from '../models/user';
 const bcrypt = require('bcrypt');
 
-
-let regExPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,16}$/;
-
 router.post('/resetPassword', async (req, res) => {
     const id = req.query.id;
     let body = req.body;
     const token = req.query.token;
     let password = body.password;
-    if (!regExPassword.test(password)){
-        res.send({
-            message:
-            'The password must contain at least: between 8 and 16 characters, 1 number, 1 lowercase letter, 1 capital letter and 1 special character'
-        });
-        return;
-    }
 
     try {
         body.password = await bcrypt.hash(password, 10)
@@ -40,7 +30,7 @@ router.post('/resetPassword', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).send({
-            message: 'Error',
+            message: 'Error en el cambio de contarseña',
             error
         })
     }
