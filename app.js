@@ -38,14 +38,13 @@ app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
+app.use('/api', require('./routes/resetPassword'));
+app.use('/api', require('./routes/forgotPassword'));
 app.use('/api', require('./routes/servicio'));
 app.use('/api', require('./routes/user'));
 app.use('/api/profile', require('./routes/profile'));
-app.use('/api', verificarAuth, require('./routes/agenda'));
+app.use('/api/agenda', verificarAuth, require('./routes/agenda'));
 app.use('/login', require('./routes/login'));
-app.use('/api', require('./routes/resetPassword'));
-app.use('/api', require('./routes/forgotPassword'));
-
 
 
 // Middleware para Vue.js router modo history
@@ -61,4 +60,3 @@ app.set('puerto', process.env.PORT || 4000);
 app.listen(app.get('puerto'), function () {
     console.log('Example app listening on port' + app.get('puerto'));
 });
-

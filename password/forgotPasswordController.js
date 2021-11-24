@@ -38,7 +38,7 @@ const ForgotPassword = {
                 }
             });
 
-            const emailPort = process.env.EMAIL_PORT || 3000;
+            const emailPort = process.env.EMAIL_PORT || 4000;
             const urlFront = 'http://agendy-client-react-dev.herokuapp.com';
 
             const mailOptions = {
