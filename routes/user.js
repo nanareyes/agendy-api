@@ -98,12 +98,20 @@ router.delete('/user/:id', async (req, res) => {
 router.put('/user/:id', async (req, res) => {
     const _id = req.params.id;
     const body = req.body;
+    console.log(body.dateOfBirth)
+    console.log(body.phone)
+    console.log(body.address)
+    console.log(body.city)
+    console.log(body.userType)
+
     try {
         const userDB = await User.findByIdAndUpdate(
             _id, body, { new: true });
         res.json(userDB);
     }
     catch (error) {
+        console.log('Datos no actualizados');
+        console.log(error);
         return res.status(400).json({
             mensaje: 'Ocurrio un error', error
         })
