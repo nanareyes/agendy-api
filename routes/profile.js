@@ -16,6 +16,21 @@ const bucket = storage.bucket("agendyimages");
 
 const router = express.Router();
 
+router.get('/listBuckets', async (req, res) => {
+  try {
+    const [buckets] = await storage.getBuckets();
+
+    console.log('Buckets:');
+    // buckets.forEach(bucket => {
+    //   console.log(bucket.name);
+    // });
+    res.json(buckets)
+  } catch (err) {
+    console.error('ERROR listBuckets:', err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
 router.post('/:id', async (req, res) => {
   try {
     await processFile(req, res);
