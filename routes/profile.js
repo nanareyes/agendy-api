@@ -10,10 +10,15 @@ const credentials = {
   "client_email": process.env.GCS_CLIENT_EMAIL,
   "private_key": process.env.GCS_PRIVATE_KEY,
 };
+console.log("profile credentials", credentials);
 const projectId = process.env.GCS_PROJECT_ID;
+console.log("profile projectId", projectId);
 const storage = new Storage({ projectId, credentials });
+console.log("profile storage", storage);
 
 const bucket = storage.bucket("agendyimages");
+console.log("profile bucket", bucket);
+
 
 const router = express.Router();
 
