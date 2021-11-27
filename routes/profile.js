@@ -31,6 +31,7 @@ router.post('/:id', async (req, res) => {
     });
 
     blobStream.on("error", (err) => {
+      console.log ('Este es el error', err)
       res.status(500).send({ message: err.message });
     });
 
