@@ -2,6 +2,7 @@ const express = require('express');
 const processFile = require("../middlewares/processFile");
 const { format } = require("util");
 const { Storage } = require("@google-cloud/storage");
+require('dotenv').config();
 import User from "../models/user";
 
 // Instantiate a storage client with credentials
