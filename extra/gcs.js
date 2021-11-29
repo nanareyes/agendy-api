@@ -30,4 +30,4 @@ async function makeBucketPublic() {
   console.log(`Bucket ${bucketName} is now publicly readable`);
 }
 
-makeBucketPublic();
+listBuckets();

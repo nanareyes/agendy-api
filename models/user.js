@@ -40,11 +40,11 @@ const userSchema = new Schema({
 });
 
 // Eliminar pass de respuesta JSON
-userSchema.methods.toJSON = function () {
-  var obj = this.toObject();
-  delete obj.password;
-  return obj;
-}
+// userSchema.methods.toJSON = function () {
+//   var obj = this.toObject();
+//   delete obj.password;
+//   return obj;
+// }
 
 // Convertir a modelo
 const User = mongoose.model('User', userSchema);

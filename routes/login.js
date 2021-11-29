@@ -14,28 +14,30 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
 
-  let body = req.body;
+  const body = req.body;
+  const loginType = body.loginType || 'AGENDY';
 
   try {
     let searchUser = { email: body.email };
-    if (body.loginType === 'GOOGLE') {
+    if (loginType === 'GOOGLE') {
       searchUser = { googleId: body.googleId }
     }
     // Buscamos email en DB
     let userDB = await User.findOne(searchUser);
-    if(!userDB && body.loginType === 'GOOGLE') {
+    if(!userDB && loginType === 'GOOGLE') {
       userDB = await User.create(body);
     }
     // Evaluamos si existe el usuario en DB
     if (!userDB) {
       return res.status(400).json({
-        mensaje: body.loginType === 'GOOGLE' ? 'Usuario no registrado!' : 'Usuario o contraseña inválidos!',
+        mensaje: loginType === 'GOOGLE' ? 'Usuario no registrado!' : 'Usuario o contraseña inválidos!',
       });
     }
 
     // Evaluamos la contraseña correcta
 
-    if (body.loginType === 'AGENDY') {
+    if (loginType === 'AGENDY') {
+      console.info('compare async: ', bcrypt.compareSync(body.password, userDB.password));
       if (!bcrypt.compareSync(body.password, userDB.password)) {
         return res.status(400).json({
           mensaje: 'Usuario o contraseña! inválidos',
@@ -43,6 +45,7 @@ router.post('/', async (req, res) => {
       }
     }
 
+    delete userDB.password
     // Generar Token
     let token = jwt.sign({
       data: userDB
