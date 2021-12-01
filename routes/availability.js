@@ -8,13 +8,13 @@ import User from "../models/user";
 
 //Ruta para obtener la disponibilidad de un estilista
 //Recibe estos parametros:
-//  startDate: fecha inicial de disponibilidad
-//  endDate: fecha final de disponibilidad
+//  year: Año de búsqueda de disponibilidad
+//  month: Mes de búsqueda de disponibilidad
 router.get('/:id', async (req, res) => {
     const stylistId = req.params.id;
-    const {startDate, endDate} = req.query;
+    const { year, month } = req.query;
     let stylist
-    
+
     // 1. Se consulta el workingSchedule del estilista, usando el parametro id
     // Obtiene el usuario estilista
     try {
@@ -34,8 +34,8 @@ router.get('/:id', async (req, res) => {
 
     // 2. Se crea un ciclo para los dias entre startDate y endDate que coincidan
     // con los dias de trabajo del estilista
-    const mStartDate = moment(startDate).utc();
-    const mEndDate = moment(endDate).utc();
+    const mStartDate = moment().set({ year, 'month': parseInt(month) - 1 }).startOf('month');
+    const mEndDate = moment().set({ year, 'month': parseInt(month) - 1 }).endOf('month');
 
     const days = [];
     for (let day = mStartDate; day.diff(mEndDate, 'days') <= 0; day.add(1, 'days')) {
@@ -53,22 +53,31 @@ router.get('/:id', async (req, res) => {
             // de las horas laborales del estilista (workingSchedule) y de las citas agendadas
             const endDay = moment(day).add(1, 'day')
             const queryDay = {
-                stylistId: stylist.id,
+                stylistId: stylist._id,
                 date: {
                     $gte: day.toDate(),
                     $lt: endDay.toDate()
                 }
             };
-            const appointmentsForDay = await Appointment.find(queryDay)
-            console.log("appointmentsForDay", appointmentsForDay);
-            days.push({day: day.format('YYYY-MM-DD'), hours });
+            // console.log("queryDay", queryDay);
+            const appointmentsForDay = await Appointment.find(queryDay).sort({ date: 1 });
+            const appointmentHours = appointmentsForDay.map(appointment => moment(appointment.date).utc().hour());
+            hours = hours.map(hour => ({
+                hour,
+                available: !appointmentHours.includes(hour)
+            }));
+            // Determinar si hay horas disponibles para ese dia
+            const availableHours = hours.filter(hourRecord => hourRecord.available);
+            // console.log("appointmentsForDay", appointmentsForDay);
+            days.push({ day: day.toDate(), enabled: availableHours.length > 0, hours });
             // console.log(day.format('YYYY-MM-DD'));
             // days.push(day.format('YYYY-MM-DD'));
+        } else {
+            days.push({ day: day.toDate(), enabled: false });
         }
     }
 
-
-    res.status(200).json({days});
+    res.status(200).json({ availability: days });
 
 });
 
