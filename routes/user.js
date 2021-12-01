@@ -15,6 +15,22 @@ router.get('/user', verificarAuth, async (req, res) => {
 
 })
 
+router.get('/users', async (req, res) => {
+    const { userType = "ALL" } = req.query
+    const query = userType === "ALL" ? {} : { userType: userType }
+
+    try {
+        const users = await User.find(query)
+        return res.status(200).json(users)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            mensaje: 'Ocurrio un error',
+            error
+        })
+    }
+})
+
 //Ruta para crear un nuevo user
 router.post('/new-user', async (req, res) => {
     let body = req.body;
