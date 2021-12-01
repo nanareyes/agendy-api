@@ -42,6 +42,8 @@ app.use('/api', require('./routes/resetPassword'));
 app.use('/api', require('./routes/forgotPassword'));
 app.use('/api', require('./routes/servicio'));
 app.use('/api', require('./routes/user'));
+app.use('/api/appointment', require('./routes/appointment'));
+app.use('/api/availability', require('./routes/availability'));
 app.use('/api/profile', require('./routes/profile'));
 app.use('/api/agenda', verificarAuth, require('./routes/agenda'));
 app.use('/login', require('./routes/login'));

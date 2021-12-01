@@ -37,6 +37,7 @@ const userSchema = new Schema({
     unique: true,
   },
   terms: { type: Boolean },
+  workingSchedule:{type: Object}
 });
 
 // Eliminar pass de respuesta JSON
