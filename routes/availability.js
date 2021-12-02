@@ -12,7 +12,7 @@ import User from "../models/user";
 //  month: Mes de búsqueda de disponibilidad
 router.get('/:id', async (req, res) => {
     const stylistId = req.params.id;
-    const { year, month } = req.query;
+    const { year, month, day } = req.query;
     let stylist
 
     // 1. Se consulta el workingSchedule del estilista, usando el parametro id
@@ -34,8 +34,15 @@ router.get('/:id', async (req, res) => {
 
     // 2. Se crea un ciclo para los dias entre startDate y endDate que coincidan
     // con los dias de trabajo del estilista
-    const mStartDate = moment().set({ year, 'month': parseInt(month) - 1 }).startOf('month');
-    const mEndDate = moment().set({ year, 'month': parseInt(month) - 1 }).endOf('month');
+    let mStartDate
+    let mEndDate
+    if (!day) {
+        mStartDate = moment().set({ year, 'month': parseInt(month) - 1 }).startOf('month');
+        mEndDate = moment().set({ year, 'month': parseInt(month) - 1 }).endOf('month');
+    } else {
+        mStartDate = moment().set({ year, 'month': parseInt(month) - 1, day });
+        mEndDate = moment().set({ year, 'month': parseInt(month) - 1, day });
+    }
 
     const days = [];
     for (let day = mStartDate; day.diff(mEndDate, 'days') <= 0; day.add(1, 'days')) {
