@@ -81,7 +81,10 @@ router.get("/:id", async (req, res) => {
   ) {
     if (day.month() === mEndDate.month()) {
       const dayOfWeek = day.isoWeekday();
-      if (Object.keys(stylist.workingSchedule).includes(`${dayOfWeek}`)) {
+      if (
+        Object.keys(stylist.workingSchedule).includes(`${dayOfWeek}`) &&
+        day.diff(moment(), "days") >= 0
+      ) {
         // 3. Por cada dia del ciclo, se consulta el horario de trabajo del estilista y
         // se consultan las citas que tenga asignadas para ese dia
         let hours = [];
