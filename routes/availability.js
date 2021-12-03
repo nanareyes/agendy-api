@@ -136,7 +136,11 @@ router.get("/:id", async (req, res) => {
     }
   }
 
-  res.status(200).json({ availability: days });
+  if (day) {
+    res.status(200).json({ ...days[0] });
+  } else {
+    res.status(200).json({ availability: days });
+  }
 });
 
 // Exportar configuración

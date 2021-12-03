@@ -88,6 +88,7 @@ router.get("/", async (req, res) => {
       $lte: mEndDate.toDate(),
     },
   };
+  console.info("query", query);
 
   try {
     const appointmentDB = await Appointment.find(query).sort({ date: 1 });
