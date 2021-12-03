@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const appointmentSchema = new Schema({
@@ -13,9 +13,9 @@ const appointmentSchema = new Schema({
   stylistPhone: { type: String },
   date: { type: Date },
   serviceName: { type: String },
-  servicePrice: { type: Number },
+  servicePrice: { type: String },
 });
 
 // Convertir a modelo
-const Appointment = mongoose.model('Appointment', appointmentSchema);
+const Appointment = mongoose.model("Appointment", appointmentSchema);
 export default Appointment;
